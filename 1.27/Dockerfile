@@ -62,6 +62,9 @@ WORKDIR /home/interimage/bin_1.27/bin
 RUN cp -r help/ /home/interimage/InterIMAGE_Source_1.27/bin \
 	&& cp -r share/ /home/interimage/InterIMAGE_Source_1.27/bin
 
+# in addition to official instructions, copy all libraries from ~/bin_1.27/bin to /usr/lib
+RUN cp -P *.so* /usr/lib
+
 WORKDIR /home/interimage/InterIMAGE_Source_1.27/bin
 
 CMD ["/bin/bash"]

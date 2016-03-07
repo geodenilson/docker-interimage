@@ -1,14 +1,35 @@
 # A Docker image for InterIMAGE
 
-This Dockerfile is based on the InterIMAGE installation instructions on Ubuntu: http://www.lvc.ele.puc-rio.br/projects/interimage/download/files/install_interimage_ubuntu.txt
+These Dockerfiles are based on the InterIMAGE installation instructions on Ubuntu: http://www.lvc.ele.puc-rio.br/projects/interimage/download/files/install_interimage_ubuntu.txt
 
-To run the container, install Docker and open a command prompt in the directory `/1.27`. Then build the container with
+## 1.43
 
-`docker build -t interimage .`
+**Status:** The instructions linked above are not transferable directly to the latest source code.
+
+### Build and run
+
+To execute the container, install Docker and open a command prompt in the directory `/1.27`. Then build the container with
+
+`docker build -t interimage/143 .`
 
 and start it with
 
-`docker run -it --user interimage interimage`
+`docker run -it --user interimage interimage/143`
+
+
+## 1.27
+
+**Status:** Based on the existing Linux download of InterIMAGE, the Dockerfile successfully downloads and compiles InterIMAGE and the required binaries.
+
+### Build and run
+
+To execute the container, install Docker and open a command prompt in the directory `/1.27`. Then build the container with
+
+`docker build -t interimage/1.27 .`
+
+and start it with
+
+`docker run -it --user interimage interimage/1.27`
 
 (To remove the image directly after, add the `--rm` flag.)
 
@@ -19,13 +40,29 @@ This opens a bash prompt. Interimage is can be started with the following comman
 ```
 
 
-## Development
+### Build and run with UI
+
+(Based on https://hub.docker.com/r/toddstavish/orfeo_toolbox/ and https://github.com/adrienandrem/interimage-docker/blob/1.27/Makefile)
+
+Background on GUI applications in Docker:
+* http://fabiorehm.com/blog/2014/09/11/running-gui-apps-with-docker/
+* http://wiki.ros.org/docker/Tutorials/GUI
+* On Linux, we simply forward our X11 info with the Docker container. **This is a potential security risk** because the container can receive all X11 events that happen on the host computer desktop ([via](http://fabiorehm.com/blog/2014/09/11/running-gui-apps-with-docker/#comment-1625694548)).
+
+```
+xhost +
+docker run -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY -e uid=$(id -u) -e gid=$(id -g) -v /<path to workdir>:/home/data interimage/1.27 ./interimage
+xhost -
+```
+
+
+### Development
 
 * `docker build .`
 * `docker run -it --rm <imageid>`
 
 
-## Image content
+### Image content
 
 The image has a user `interimage` which should be used to run analysis in the container if you have security considerations.
 
@@ -61,4 +98,3 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-

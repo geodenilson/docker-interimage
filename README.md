@@ -1,5 +1,7 @@
 # A Docker image for InterIMAGE
 
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.55083.svg)](http://dx.doi.org/10.5281/zenodo.55083)
+
 These Dockerfiles are based on the InterIMAGE installation instructions on Ubuntu: http://www.lvc.ele.puc-rio.br/projects/interimage/download/files/install_interimage_ubuntu.txt
 
 ## 1.43
